@@ -11,13 +11,18 @@ ROOTFS_DIR = root
 # other
 LINUX_VER = $(shell sed -n 1p $(LINUX_DIR)/Makefile | cut -d' ' -f3).$(shell sed -n 2p $(LINUX_DIR)/Makefile | cut -d' ' -f3).$(shell sed -n 3p $(LINUX_DIR)/Makefile | cut -d' ' -f3)$(shell sed -n 4p $(LINUX_DIR)/Makefile | cut -d' ' -f3)+
 
-PHONY = all
-all: prep make set run
+PHONY = default
+default: make_walb_driver_set_run
+
+PHONY += all
+all: prep_all make_all set run
+
+PHONY += make_walb_driver_set_run
+make_walb_driver_set_run: make_walb_driver set run
 
 ########## prep ##########
-PHONY += prep
-# prep: prep_linux prep_walb_driver prep_walb_tools prep_busybox prep_disk
-prep: prep_walb_driver prep_walb_tools prep_busybox prep_disk
+PHONY += prep_all
+prep_all: prep_linux prep_walb_driver prep_walb_tools prep_busybox prep_disk
 
 PHONY += prep_linux
 prep_linux:
@@ -42,14 +47,17 @@ prep_busybox:
 	fi
 
 PHONY += prep_disk
-prep_disk:
-	if /sbin/losetup | grep -q $(DISK_IMAGE); then \
-		sudo losetup -d $(shell sudo losetup | grep $(DISK_IMAGE) | cut -d' ' -f1); \
+prep_disk: prep_disk_dd prep_disk_losetup prep_disk_mkfs
+	dd if=/dev/zero of=$(DISK_IMAGE) bs=1M seek=1024 count=1
+
+PHONY += prep_disk_losetup
+prep_disk_losetup:
+	if ! /sbin/losetup | grep -q $(DISK_IMAGE); then \
+		sudo losetup $(shell sudo losetup -f) $(DISK_IMAGE); \
 	fi
 
-	dd if=/dev/zero of=$(DISK_IMAGE) bs=1M seek=1024 count=1
-	sudo losetup $(shell sudo losetup -f) $(DISK_IMAGE)
-
+PHONY += prep_disk_mkfs
+prep_disk_mkfs:
 	@echo '########## Please confirm format operation ##########'
 	/sbin/losetup
 	@echo command: sudo mkfs.ext4 $$(sudo losetup | grep $(DISK_IMAGE) | cut -d' ' -f1)
@@ -58,8 +66,8 @@ prep_disk:
 	sudo mkfs.ext4 $$(sudo losetup | grep $(DISK_IMAGE) | cut -d' ' -f1)
 
 ########## make ##########
-PHONY += make
-make: make_linux make_walb_driver make_walb_tools
+PHONY += make_all
+make_all: make_linux make_walb_driver make_walb_tools
 
 PHONY += make_linux
 make_linux:
@@ -75,7 +83,7 @@ make_walb_tools:
 
 ########## set ##########
 PHONY += set
-set:
+set: prep_disk_losetup
 	mkdir -p $(ROOTFS_DIR)
 	sudo mount $$(sudo losetup | grep $(DISK_IMAGE) | cut -d' ' -f1) $(ROOTFS_DIR)
 
