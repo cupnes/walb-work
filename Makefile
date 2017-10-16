@@ -95,6 +95,7 @@ set: prep_disk_losetup
 	sudo mkdir -p $(ROOTFS_DIR)/dev
 	sudo mkdir -p $(ROOTFS_DIR)/proc
 	sudo mkdir -p $(ROOTFS_DIR)/sys
+	sudo mkdir -p $(ROOTFS_DIR)/root
 	sudo mkdir -p $(ROOTFS_DIR)/etc/init.d
 
 	sudo cp busybox-static/bin/busybox $(ROOTFS_DIR)/bin/
