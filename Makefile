@@ -9,7 +9,7 @@ DISK_IMAGE = disk_walb_root.img
 ROOTFS_DIR = root
 
 # other
-LINUX_VER = $(shell sed -n 1p $(LINUX_DIR)/Makefile | cut -d' ' -f3).$(shell sed -n 2p $(LINUX_DIR)/Makefile | cut -d' ' -f3).$(shell sed -n 3p $(LINUX_DIR)/Makefile | cut -d' ' -f3)$(shell sed -n 4p $(LINUX_DIR)/Makefile | cut -d' ' -f3)+
+LINUX_VER = $(shell sed -n 1p $(LINUX_DIR)/Makefile | cut -d' ' -f3).$(shell sed -n 2p $(LINUX_DIR)/Makefile | cut -d' ' -f3).$(shell sed -n 3p $(LINUX_DIR)/Makefile | cut -d' ' -f3)$(shell sed -n 4p $(LINUX_DIR)/Makefile | cut -d' ' -f3)
 
 PHONY = default
 default: make_walb_driver_set_run
