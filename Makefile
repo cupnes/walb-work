@@ -110,6 +110,12 @@ set: prep_disk_losetup
 	sudo mkdir -p $(ROOTFS_DIR)/lib/modules/$(LINUX_VER)/kernel/drivers/block/walb
 	sudo cp $(WALB_DRIVER_DIR)/module/walb-mod.ko $(ROOTFS_DIR)/lib/modules/$(LINUX_VER)/kernel/drivers/block/walb/
 
+	./install_bin.sh /sbin/lvm $(ROOTFS_DIR)
+	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/pvcreate
+	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/pvs
+	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/vgcreate
+	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/lvcreate
+
 	sudo umount $(ROOTFS_DIR)
 
 ########## run ##########
