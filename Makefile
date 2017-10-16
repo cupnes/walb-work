@@ -48,6 +48,9 @@ prep_busybox:
 
 PHONY += prep_disk
 prep_disk: prep_disk_dd prep_disk_losetup prep_disk_mkfs
+
+PHONY += prep_disk_dd
+prep_disk_dd:
 	dd if=/dev/zero of=$(DISK_IMAGE) bs=1M seek=1024 count=1
 
 PHONY += prep_disk_losetup
