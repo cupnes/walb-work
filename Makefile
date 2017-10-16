@@ -91,6 +91,7 @@ set: prep_disk_losetup
 	sudo mkdir -p $(ROOTFS_DIR)/bin
 	sudo mkdir -p $(ROOTFS_DIR)/dev
 	sudo mkdir -p $(ROOTFS_DIR)/proc
+	sudo mkdir -p $(ROOTFS_DIR)/sys
 	sudo mkdir -p $(ROOTFS_DIR)/etc/init.d
 
 	sudo cp busybox-static/bin/busybox $(ROOTFS_DIR)/bin/
@@ -99,6 +100,7 @@ set: prep_disk_losetup
 	sudo ln -fs busybox $(ROOTFS_DIR)/bin/mount
 
 	echo 'mount -t proc proc /proc' > rcS
+	echo 'mount -t sysfs sysfs /sys' >> rcS
 	echo 'mount -o remount /dev/root /' >> rcS
 	echo 'depmod $$(uname -r)' >> rcS
 	echo 'sh' >> rcS
