@@ -121,6 +121,8 @@ set: prep_disk_losetup
 	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/lvcreate
 	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/lvdisplay
 
+	./install_bin.sh /sbin/dmsetup $(ROOTFS_DIR)
+
 	sudo umount $(ROOTFS_DIR)
 
 ########## run ##########
