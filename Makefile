@@ -120,8 +120,11 @@ set: prep_disk_losetup
 	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/pvcreate
 	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/pvs
 	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/vgcreate
+	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/vgdisplay
+	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/vgremove
 	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/lvcreate
 	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/lvdisplay
+	sudo ln -fs lvm $(ROOTFS_DIR)/sbin/lvremove
 
 	./install_bin.sh /sbin/dmsetup $(ROOTFS_DIR)
 
