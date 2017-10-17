@@ -128,6 +128,8 @@ set: prep_disk_losetup
 
 	./install_bin.sh /sbin/dmsetup $(ROOTFS_DIR)
 
+	./install_bin.sh /usr/bin/strace $(ROOTFS_DIR)
+
 	sudo umount $(ROOTFS_DIR)
 
 ########## run ##########
