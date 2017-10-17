@@ -108,6 +108,10 @@ set: prep_disk_losetup
 	echo 'mount -o remount /dev/root /' >> rcS
 	echo 'depmod $$(uname -r)' >> rcS
 
+	sudo cp test01.sh $(ROOTFS_DIR)/etc/init.d/
+	sudo chmod +x $(ROOTFS_DIR)/etc/init.d/test01.sh
+	echo '/etc/init.d/test01.sh' >> rcS
+
 	echo 'cd /root' >> rcS
 	echo 'sh' >> rcS
 	sudo cp rcS $(ROOTFS_DIR)/etc/init.d/
