@@ -130,6 +130,9 @@ set: prep_disk_losetup
 
 	./install_bin.sh /usr/bin/strace $(ROOTFS_DIR)
 
+	./install_bin.sh /sbin/mke2fs $(ROOTFS_DIR)
+	sudo ln -fs mke2fs $(ROOTFS_DIR)/sbin/mkfs.ext4
+
 	sudo umount $(ROOTFS_DIR)
 
 ########## run ##########
