@@ -107,6 +107,8 @@ set: prep_disk_losetup
 	echo 'mount -t sysfs sysfs /sys' >> rcS
 	echo 'mount -o remount /dev/root /' >> rcS
 	echo 'depmod $$(uname -r)' >> rcS
+
+	echo 'cd /root' >> rcS
 	echo 'sh' >> rcS
 	sudo cp rcS $(ROOTFS_DIR)/etc/init.d/
 	sudo chmod +x $(ROOTFS_DIR)/etc/init.d/rcS
